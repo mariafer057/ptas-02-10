@@ -11,7 +11,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
 }
 
 model Usuario {
@@ -20,4 +20,24 @@ model Usuario {
   email String @unique
   password String
   tipo String 
+  reserva Reserva[]
+}
+
+model Mesa {
+  id Int @id @default(autoincrement())
+  codigo String
+  n_lugares Int
+}
+
+model Reserva{
+  id Int @id @default(autoincrement())
+  data DateTime
+  n_pessoas Int
+
+
+// true: Reserva ativa | false: reserva cancelada
+status Boolean @default(true)
+
+usuarioId Int 
+usuario Usuario @relation(fields: [usuarioId], references: [id])
 }

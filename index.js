@@ -18,14 +18,8 @@ app.use(cors());
 const authRoutes = require("./routes/authRoutes")
 app.use("/auth", authRoutes);
 
+const perfilRoutes = require("./routes/perfilRoutes");
 app.use("/perfil", AuthController.verificaAutenticacao, perfilRoutes);
-
-app.get("/privado", AuthController.verificaAutenticacao, (req, res) =>{
-
-    res.json({
-        msg: "vc acessou a rota restrita",
-    });
-});
 
 app.listen(8000, () => {
     console.log("Servidor rodando na porta 8000");

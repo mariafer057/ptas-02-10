@@ -27,6 +27,7 @@ model Mesa {
   id Int @id @default(autoincrement())
   codigo String
   n_lugares Int
+  reserva Reserva[]
 }
 
 model Reserva{
@@ -40,4 +41,7 @@ status Boolean @default(true)
 
 usuarioId Int 
 usuario Usuario @relation(fields: [usuarioId], references: [id])
+
+usuarioId Int 
+usuario Mesa @relation(fields: [mesaId], references: [id])
 }

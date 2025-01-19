@@ -2,10 +2,14 @@ const express = require("express");
 const router = express.Router();
 
 const MesaController = require("../controllers/MesaController");
+const AuthController = require("../controllers/AuthController");
 
-router.post("/login", AuthController.login );
-router.post("/cadastro", AuthController.cadastro );
 
-router.popst("/", MesaController.novamesa)
+router.post("/novo", 
+    AuthController.autenticar, 
+    AuthController.verificaPermissaoAdm,
+    MesaController.novaMesa);
+
+    router.get("/", MesaController.buscarMesas);
 
 module.exports = router;

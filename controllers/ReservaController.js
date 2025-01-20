@@ -84,20 +84,21 @@ class ReservaController {
         }
     }
 
-    //Função para encontrar reservas por data
-    static async buscarReservasPorData(req, res){
-        const {data} = req.query;
+    // Função para encontrar reservas por data
+    static async buscarReservasPorData(req, res) {
+        const { data } = req.query;
 
-        if(!data){
+        if (!data) {
             return res.status(400).json({
                 sucesso: false,
                 mensagem: "Por favor, forneça uma data no formato 'yyyy-mm-dd'.",
-            })
+            });
         }
-         try{
+
+        try {
             const reservasPorData = await prisma.reserva.findMany({
-                where; {
-                    data: new Date (data),
+                where: {
+                    data: new Date(data),
                 },
                 include: {
                     mesa: true,
@@ -114,51 +115,49 @@ class ReservaController {
             return res.status(200).json({
                 sucesso: true,
                 mensagem: "Reservas para a data selecionada encontradas com sucesso.",
-                reservasPorData
+                reservasPorData,
             });
-
-        } catch (err){
-            console.error(err)
+        } catch (err) {
+            console.error(err);
             return res.status(500).json({
-                sucesso: true,
+                sucesso: false,
                 mensagem: "Falha ao buscar as reservas para a data fornecida.",
             });
         }
     }
 
     // Função para excluir uma reserva
-    static async excluirReserva(req, res){
-        const {reservaId} = req.body;
-        try{
+    static async excluirReserva(req, res) {
+        const { reservaId } = req.body;
+        try {
             const reserva = await prisma.reserva.findUnique({
-                where: {id: parseInt(reservaId)},
+                where: { id: parseInt(reservaId) },
             });
 
-        if (!reserva){
-            return res.status(404).json({
-                sucesso: false,
-                mensagem: "Reserva não localizada, por favor verificar o ID fornecido.",
-            });
-        }
-        
-        if (reserva.usuario !== req.usuarioId){
-            return res.status(403).json({
-                sucesso: false,
-                mensagem: "Você não tem autorização para cancelar essa reserva",
-            });
-        }
+            if (!reserva) {
+                return res.status(404).json({
+                    sucesso: false,
+                    mensagem: "Reserva não localizada, por favor verifique o ID fornecido.",
+                });
+            }
 
-        await prisma.reserva.delete({
-            where: {id: pardeInt(reservaId)},
-        });
+            if (reserva.usuarioId !== req.usuarioId) {
+                return res.status(403).json({
+                    sucesso: false,
+                    mensagem: "Você não tem autorização para cancelar essa reserva.",
+                });
+            }
 
-        return res.status(200).json({
-            sucesso: true,
-            mensagem: "Reserva cancelada com sucesso.",
+            await prisma.reserva.delete({
+                where: { id: parseInt(reservaId) },
             });
 
-        } catch (err){
-            console.error(err)
+            return res.status(200).json({
+                sucesso: true,
+                mensagem: "Reserva cancelada com sucesso.",
+            });
+        } catch (err) {
+            console.error(err);
             return res.status(500).json({
                 sucesso: false,
                 mensagem: "Erro ao cancelar reserva.",
@@ -166,10 +165,10 @@ class ReservaController {
         }
     }
 
-    //FUnção para consultar as reservas do úsuario
-    static async consultarReservasUsuario(req, res){
-    try{
-            const reservasUsuario = await prisma.reserva.findUnique({
+    // Função para consultar as reservas do usuário
+    static async consultarReservasUsuario(req, res) {
+        try {
+            const reservasUsuario = await prisma.reserva.findMany({
                 where: {
                     usuarioId: req.usuarioId,
                 },
@@ -181,18 +180,16 @@ class ReservaController {
             return res.status(200).json({
                 sucesso: true,
                 mensagem: "Suas reservas foram recuperadas com sucesso.",
-                reservasUsuario
-                });
-    
-            } catch (err){
-                console.error(err)
-                return res.status(500).json({
-                    sucesso: false,
-                    mensagem: "Falha ao tentar recuperar suas reservas.",
-                });
-            }
-
-         
+                reservasUsuario,
+            });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({
+                sucesso: false,
+                mensagem: "Falha ao tentar recuperar suas reservas.",
+            });
+        }
+    }
 }
 
 module.exports = ReservaController;

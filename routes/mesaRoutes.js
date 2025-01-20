@@ -6,7 +6,7 @@ const AuthController = require("../controllers/AuthController");
 
 
 router.post("/novo", 
-    AuthController.autenticar, 
+    AuthController.verificaAutenticacao, 
     AuthController.verificaPermissaoAdm,
     MesaController.novaMesa);
 

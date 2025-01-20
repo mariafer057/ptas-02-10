@@ -1,4 +1,4 @@
-const prisma = require("../prisma/migrations/prismaClient");
+const prisma = require("../prisma/prismaClient");
 require('dotenv').config();
 
 const bcryptjs = require("bcryptjs");
@@ -119,7 +119,6 @@ class AuthController{
         });
     }
     
-}
 
 //meddleware para checar se o user é adm
 static async verificaPermissaoAdm (req, res, next){
@@ -135,6 +134,7 @@ static async verificaPermissaoAdm (req, res, next){
             mensagem: "Você não tem permição para acessar esse recurso!"
         })
     }
+}
 }
 
 

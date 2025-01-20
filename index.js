@@ -12,11 +12,15 @@ const authRoutes = require("./routes/authRoutes");
 app.use("/auth", authRoutes);
 
 
-const perfilRoutes = require("./routes/profileRoutes"); 
-app.use("/perfil", AuthController.verificaAutenticacao, perfilRoutes);
+const perfilRoutes = require("./routes/perfilRoutes"); 
+app.use("/perfil", AuthController.autenticar, perfilRoutes);
 
 const mesaRoutes = require("./routes/mesaRoutes"); 
 app.use("/mesa", mesaRoutes); 
+
+
+const reservaRoutes = require("./routes/reservaRoutes"); 
+app.use("/reservas", AuthController.autenticar, reservaRoutes); 
 
 app.listen(8000, () => {
     console.log("Servidor rodando na porta 8000");

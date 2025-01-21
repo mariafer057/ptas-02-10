@@ -107,12 +107,12 @@ class AuthController{
 
         const token = authHeader && authHeader.split("")[1];
         
-        if ( !token) {
+        if (!token) {
             return res.status(422).json({ message: "Token não encontrado."});
         }
         jwt.verify(token, process.env.SECRET_KEY, (err, payload)=>{
             if(err){
-                return res.status(401).json({msg: "token invalido"})
+                return res.status(401).json({msg: "token inválido"})
             }
             req.usuarioId = payload.id;
             next();

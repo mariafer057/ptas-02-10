@@ -27,7 +27,7 @@ model Mesa {
   id Int @id @default(autoincrement())
   codigo String
   n_lugares Int
-  reserva Reserva[]
+  reservas Reserva[]
 }
 
 model Reserva{

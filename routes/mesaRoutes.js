@@ -15,6 +15,6 @@ router.post("/novo",
 router.get("/", MesaController.listarMesas);
 
 //Rota para buscar mesas disponíveis
-router.get("/disponibilidade",  MesaController.verificarDisponibilidade);
+router.get("/disponiveis",  MesaController.verificarDisponibilidade);
 
 module.exports = router;

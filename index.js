@@ -19,7 +19,6 @@ app.use("/perfil", AuthController.verificaAutenticacao, perfilRoutes);
 const mesaRoutes = require("./routes/mesaRoutes"); 
 app.use("/mesa", mesaRoutes); 
 
-
 const reservaRoutes = require("./routes/reservaRoutes"); 
 app.use("/reservas", AuthController.verificaAutenticacao, reservaRoutes); 
 

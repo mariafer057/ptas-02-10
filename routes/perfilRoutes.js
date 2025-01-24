@@ -6,7 +6,7 @@ const AuthController = require("../controllers/AuthController");
 
 //Rotas para vizualizar o perfil do úsuario e atualizar
 router.get("/", perfilController.getPerfil );
-router.put("/", perfilController.atualizaPerfil );
+router.patch("/", perfilController.atualizaPerfil );
 router.get("/todos",
     AuthController.verificaAutenticacao,
     AuthController.verificaPermissaoAdm,
